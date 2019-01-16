@@ -8,6 +8,17 @@ module.exports = function initViewEngine (keystone, app) {
 	app.set('views', keystone.getPath('views') || 'views');
 	app.set('view engine', keystone.get('view engine'));
 
+	if (keystone.get('view engine') === 'pug') {
+
+		try {
+			app.locals.plugins = app.locals.plugins || [];
+			app.locals.plugins.push(require('pug-bem'));
+		} catch (e) {
+			// nulla
+		}
+
+	}
+
 	var customView = keystone.get('view');
 	if (customView) {
 		app.set('view', customView);
