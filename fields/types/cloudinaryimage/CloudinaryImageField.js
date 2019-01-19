@@ -311,7 +311,7 @@ module.exports = Field.create({
 		}
 	},
 
-	renderUI () {
+	renderUI (hide_field) {
 		const { label, note, path } = this.props;
 
 		const imageContainer = (
@@ -325,8 +325,12 @@ module.exports = Field.create({
 			? this.renderImageToolbar()
 			: <FormInput noedit />;
 
+		const styles = {};
+		if (hide_field) {
+			styles.display = 'none';
+		}
 		return (
-			<FormField label={label} className="field-type-cloudinaryimage" htmlFor={path}>
+			<FormField label={label} className="field-type-cloudinaryimage" htmlFor={path} style={styles}>
 				{imageContainer}
 				{toolbar}
 				{!!note && <FormNote html={note} />}

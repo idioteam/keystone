@@ -288,12 +288,17 @@ module.exports = Field.create({
 			</div>
 		);
 	},
-	renderUI () {
+	renderUI (hide_field) {
 		const { label, note, path } = this.props;
 		const { thumbnails } = this.state;
 
+		const styles = {};
+		if (hide_field) {
+			styles.display = 'none';
+		}
+
 		return (
-			<FormField label={label} className="field-type-cloudinaryimages" htmlFor={path}>
+			<FormField label={label} className="field-type-cloudinaryimages" htmlFor={path} style={styles}>
 				<div>
 					{thumbnails}
 				</div>

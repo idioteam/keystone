@@ -212,7 +212,7 @@ module.exports = Field.create({
 			</ImageThumbnail>
 		);
 	},
-	renderUI () {
+	renderUI (hide_field) {
 		const { label, note, path, thumb } = this.props;
 		const isImage = this.isImage();
 		const hasFile = this.hasFile();
@@ -231,9 +231,13 @@ module.exports = Field.create({
 				{hasFile && this.renderClearButton()}
 			</div>
 		);
+		const styles = {};
+		if (hide_field) {
+			styles.display = 'none';
+		}
 		return (
 			<div data-field-name={path} data-field-type="file">
-				<FormField label={label} htmlFor={path}>
+				<FormField label={label} htmlFor={path} style={styles}>
 					{this.shouldRenderField() ? (
 						<div>
 							{previews}
