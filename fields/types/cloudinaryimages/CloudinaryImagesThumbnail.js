@@ -71,7 +71,7 @@ function CloudinaryImagesThumbnail ({
 							style={{ marginTop: '1em' }}
 							onChange={makeChanger('alt')}
 							placeholder='alt text'
-							value={value.at || ''}
+							value={value.alt || ''}
 						/>
 					) : null
 				}
