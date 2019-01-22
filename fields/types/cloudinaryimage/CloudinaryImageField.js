@@ -41,6 +41,7 @@ module.exports = Field.create({
 			url: PropTypes.string,
 			version: PropTypes.number,
 			width: PropTypes.number,
+			alt: PropTypes.string,
 		}),
 	},
 	displayName: 'CloudinaryImageField',
@@ -212,19 +213,50 @@ module.exports = Field.create({
 				onClick={shouldOpenLightbox && this.openLightbox}
 				mask={mask}
 				target="__blank"
-				style={{ float: 'left', marginRight: '1em' }}
+				style={{ marginRight: '1em' }}
 			>
 				<img src={this.getImageSource()} style={{ height: 90 }} />
 			</ImageThumbnail>
 		);
 	},
+	fieldChanged (fieldPath, event) {
+		const { value = {}, path, onChange } = this.props;
+		onChange({
+			path,
+			value: {
+				...value,
+				[fieldPath]: event.target.name
+			},
+		});
+	},
+	makeChanger (fieldPath) {
+		return this.fieldChanged.bind(this, fieldPath);
+	},
 	renderFileNameAndOptionalMessage (showChangeMessage = false) {
+		const { value = {}, path } = this.props;
+		const fieldPath = 'alt';
 		return (
 			<div>
 				{this.hasImage() ? (
-					<FileChangeMessage>
-						{this.getFilename()}
-					</FileChangeMessage>
+					<div>
+
+						<FileChangeMessage style={{width: '100%'}}>
+							{this.getFilename()}
+						</FileChangeMessage>
+
+						<FormInput
+							style={{ display: 'inline-block', marginBottom: '1em', marginTop: '1em' }}
+							name={this.state.userSelectedFile ? path + '.' + fieldPath : null}
+							onChange={this.makeChanger(fieldPath)}
+							placeholder='alt text'
+							value={value[fieldPath] || ''}
+						/>
+
+						{this.state.userSelectedFile || this.state.removeExisting ? null : (
+							<input type="hidden" name={path} value={JSON.stringify(value)} />
+						) }
+
+					</div>
 				) : null}
 				{showChangeMessage && this.renderChangeMessage()}
 			</div>

@@ -16,6 +16,7 @@ function getEmptyValue () {
 		width: 0,
 		height: 0,
 		secure_url: '',
+		alt: '',
 	};
 }
 
@@ -110,6 +111,7 @@ cloudinaryimages.prototype.addToSchema = function (schema) {
 		width: Number,
 		height: Number,
 		secure_url: String,
+		alt: String
 	});
 
 	// Generate cloudinary folder used to upload/select images

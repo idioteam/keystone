@@ -59,6 +59,7 @@ module.exports = Field.create({
 					width: 900,
 					secure: props.secure,
 				}),
+				onChange: props.onChange,
 			}, index);
 		}) : [];
 		return { thumbnails, uploadFieldPath };

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Button } from '../../../admin/client/App/elemental';
+import { Button, FormInput } from '../../../admin/client/App/elemental';
 import ImageThumbnail from '../../components/ImageThumbnail';
 
 function CloudinaryImagesThumbnail ({
@@ -12,6 +12,7 @@ function CloudinaryImagesThumbnail ({
 	shouldRenderActionButton,
 	toggleDelete,
 	value,
+	onChange,
 	...props
 }) {
 	// render icon feedback for intent
@@ -32,9 +33,24 @@ function CloudinaryImagesThumbnail ({
 
 	// provide gutter for the images
 	const imageStyles = {
-		float: 'left',
 		marginBottom: 10,
 		marginRight: 10,
+		textAlign: 'center',
+	};
+
+	const makeChanger = (fieldPath) => {
+		return fieldChanged.bind(this, fieldPath);
+	};
+
+	const fieldChanged = (fieldPath, event) => {
+		value[fieldPath] = event.target.value;
+		onChange({
+			inputName,
+			value: {
+				...value,
+				[fieldPath]: event.target.value,
+			},
+		});
 	};
 
 	return (
@@ -48,8 +64,20 @@ function CloudinaryImagesThumbnail ({
 			>
 				<img src={imageSourceSmall} style={{ height: 90 }} />
 			</ImageThumbnail>
-			{actionButton}
-			{input}
+			<div>
+				{
+					value ? (
+						<FormInput
+							style={{ marginTop: '1em' }}
+							onChange={makeChanger('alt')}
+							placeholder='alt text'
+							value={value.at || ''}
+						/>
+					) : null
+				}
+				{actionButton}
+				{input}
+			</div>
 		</div>
 	);
 
