@@ -225,7 +225,7 @@ module.exports = Field.create({
 			path,
 			value: {
 				...value,
-				[fieldPath]: event.target.name
+				[fieldPath]: event.target.value
 			},
 		});
 	},
@@ -347,7 +347,7 @@ module.exports = Field.create({
 		const { label, note, path } = this.props;
 
 		const imageContainer = (
-			<div style={this.hasImage() ? { marginBottom: '1em' } : null}>
+			<div style={this.hasImage() ? { display: 'flex', marginBottom: '1em' } : null}>
 				{this.hasImage() && this.renderImagePreview()}
 				{this.hasImage() && this.renderFileNameAndOptionalMessage(this.shouldRenderField())}
 			</div>

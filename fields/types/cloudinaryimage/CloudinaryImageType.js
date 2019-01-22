@@ -409,7 +409,7 @@ cloudinaryimage.prototype.updateItem = function (item, data, files, callback) {
 	} else if (typeof value === 'string' && /^(data:[a-z\/]+;base64)|(https?\:\/\/)/.test(value)) {
 		// uploadedFile = { path: value };
 		try {
-			uploadedFile = JSON.pars(value);
+			uploadedFile = JSON.parse(value);
 		} catch (e) {
 			uploadedFile = { path: value };
 		}
