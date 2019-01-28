@@ -347,7 +347,7 @@ cloudinaryimages.prototype.updateItem = function (item, data, files, callback) {
 		}
 		return value;
 	});
-	values = _.flatten(values);
+	values = _.flattenDeep(values);
 
 	async.map(values, function (value, next) {
 		if (typeof value === 'object' && 'public_id' in value) {

@@ -31,13 +31,6 @@ function CloudinaryImagesThumbnail ({
 		<input type="hidden" name={inputName} value={JSON.stringify(value)} />
 	) : null;
 
-	// provide gutter for the images
-	const imageStyles = {
-		marginBottom: 10,
-		marginRight: 10,
-		textAlign: 'center',
-	};
-
 	const makeChanger = (fieldPath) => {
 		return fieldChanged.bind(this, fieldPath);
 	};
@@ -54,7 +47,7 @@ function CloudinaryImagesThumbnail ({
 	};
 
 	return (
-		<div style={imageStyles}>
+		<div className='ci-thumb'>
 			<ImageThumbnail
 				component={imageSourceLarge ? 'a' : 'span'}
 				href={!!imageSourceLarge && imageSourceLarge}
@@ -68,7 +61,6 @@ function CloudinaryImagesThumbnail ({
 				{
 					value ? (
 						<FormInput
-							style={{ marginTop: '1em' }}
 							onChange={makeChanger('alt')}
 							placeholder='alt text'
 							value={value.alt || ''}

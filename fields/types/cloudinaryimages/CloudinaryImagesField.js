@@ -300,7 +300,7 @@ module.exports = Field.create({
 
 		return (
 			<FormField label={label} className="field-type-cloudinaryimages" htmlFor={path} style={styles}>
-				<div style={{display:'flex', flexWrap: 'wrap', alignItems: 'flex-start'}}>
+				<div className='ci-thumbs-wrapper'>
 					{thumbnails}
 				</div>
 				{this.renderValueInput()}
