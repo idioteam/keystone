@@ -383,7 +383,7 @@ cloudinaryimages.prototype.updateItem = function (item, data, files, callback) {
 			return next();
 		}
 	}, function (err, result) {
-		cleanUp(oldValues, values);
+		cleanUp(oldValues, values.filter(v => v));
 		if (err) return callback(err);
 		result = result.filter(truthy);
 		item.set(field.path, result);
