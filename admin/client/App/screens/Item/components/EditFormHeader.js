@@ -175,9 +175,9 @@ export const EditFormHeader = React.createClass({
 	renderNote () {
 		if (this.props.list.note) {
 			return (
-				<ToolbarSection style={{clear:"both", display:"block"}}>
+				<ToolbarSection className="Toolbar__section--note">
 					{ this.state.note
-						? <div style={{padding:"1em"}} dangerouslySetInnerHTML={{__html: this.props.list.note}}></div>
+						? <div className="inner" dangerouslySetInnerHTML={{__html: this.props.list.note}}></div>
 						: null
 					}
 				</ToolbarSection>
