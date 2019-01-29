@@ -1,0 +1,22 @@
+.form-heading {
+  cursor: pointer;
+  i {
+	margin-right:.75em;
+	transition: transform .4s;
+  }
+
+  &.hide-children {
+
+	i {
+	  transform: rotate(-90deg);
+	}
+
+  }
+
+  & ~ .hide-child {
+	display:none !important;
+  }
+
+}
+
+
