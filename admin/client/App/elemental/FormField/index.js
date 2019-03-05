@@ -42,10 +42,21 @@ class FormField extends Component {
 				...props.style,
 			};
 		}
-
+		var locale = '';
+		if (htmlFor && Keystone.locales) {
+			locale = htmlFor.split('.');
+			if (locale.length) {
+				locale = locale[locale.length - 1]
+				locale = Keystone.locales.filter(l => l.locale === locale)
+				if (locale.length) {
+					locale = <span className={'flag-icon flag-icon-' + (locale[0].locale === 'en' ? 'gb' : locale[0].locale)}></span>;
+				}
+			}
+		}
 		// elements
 		const componentLabel = label ? (
 			<FormLabel htmlFor={htmlFor} cropText={cropLabel}>
+				{locale}
 				{label}
 			</FormLabel>
 		) : null;

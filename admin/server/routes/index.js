@@ -32,6 +32,7 @@ module.exports = function IndexRoute (req, res) {
 		csrf: { header: {} },
 		devMode: !!process.env.KEYSTONE_DEV,
 		lists: lists,
+		locales: keystone.get('locales'),
 		nav: keystone.nav,
 		orphanedLists: orphanedLists,
 		signoutUrl: keystone.get('signout url'),

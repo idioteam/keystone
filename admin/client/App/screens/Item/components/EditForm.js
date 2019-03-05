@@ -25,7 +25,9 @@ import InvalidFieldType from '../../../shared/InvalidFieldType';
 import { deleteItem } from '../actions';
 
 import { upcase } from '../../../../utils/string';
-
+import classes from 'keystone/admin/client/App/elemental/FormSelect/styles';
+import labelClasses from 'keystone/admin/client/App/elemental/FormLabel/styles'
+import { css } from 'glamor';
 function getNameFromData (data) {
 	if (typeof data === 'object') {
 		if (typeof data.first === 'string' && typeof data.last === 'string') {
@@ -95,6 +97,14 @@ var EditForm = React.createClass({
 
 		values[event.path] = event.value;
 		this.setState({ values });
+	},
+	change_locale (event) {
+		const values = assign({}, this.state.values);
+
+		if (values._ui_lang) {
+			values._ui_lang = document.querySelector('#_ui_lang').value;
+			this.setState({ values });
+		}
 	},
 
 	toggleDeleteDialog () {
@@ -267,6 +277,7 @@ var EditForm = React.createClass({
 				if (index === 0 && this.state.focusFirstField) {
 					props.autoFocus = true;
 				}
+
 				return React.createElement(Fields[field.type], props);
 			}
 		}, this);
@@ -312,6 +323,23 @@ var EditForm = React.createClass({
 							/>
 						</Button>
 					)}
+					{this.props.list.i18n && (<div className={css(classes.container)} id='Locale_selector'>
+						<label className={css(labelClasses.FormLabel)} htmlFor="_ui_lang">
+							<ResponsiveText
+								hiddenXS="change locale"
+								visibleXS="locale"
+							/>
+						</label>
+						<select className={css(classes.select)} id="_ui_lang" onChange={this.change_locale}>
+							{ Keystone.locales.map(l =>
+								<option value={l.locale} selected={this.state.values._ui_lang === l.locale}>{l.locale.toUpperCase()}</option>
+							)}
+						</select>
+						<span className={css(classes.arrows)}>
+							<span className={css(classes.arrow, classes.arrowTop)} />
+							<span className={css(classes.arrow, classes.arrowBottom)} />
+						</span>
+					</div>)}
 				</div>
 			</FooterBar>
 		);
