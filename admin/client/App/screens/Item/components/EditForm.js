@@ -69,10 +69,21 @@ var EditForm = React.createClass({
 		};
 	},
 	componentDidMount () {
+		document.addEventListener('keydown', this.keydownHandler);
 		this.__isMounted = true;
 	},
 	componentWillUnmount () {
+		document.removeEventListener('keydown', this.keydownHandler);
 		this.__isMounted = false;
+	},
+	keydownHandler (e) {
+		if (e.keyCode === 13 && e.ctrlKey) {
+			const selettore = document.querySelector('#_ui_lang');
+			if (selettore) {
+				selettore.selectedIndex = (selettore.selectedIndex === selettore.options.length -1 ? 0 : selettore.selectedIndex + 1);
+				this.change_locale();
+			}
+		}
 	},
 	getFieldProps (field) {
 		const props = assign({}, field);
