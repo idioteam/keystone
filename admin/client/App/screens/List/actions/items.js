@@ -4,7 +4,7 @@ import {
 	ITEM_LOADING_ERROR,
 } from '../constants';
 
-import { NETWORK_ERROR_RETRY_DELAY } from '../../../../constants';
+import { NETWORK_ERROR_RETRY_DELAY, ITEM_UNAUTH_ERROR } from '../../../../constants';
 export function loadItems (options = {}) {
 	return (dispatch, getState) => {
 		let currentLoadCounter = getState().lists.loadCounter + 1;
@@ -96,15 +96,17 @@ export function itemsLoaded (items) {
  * loadItems after NETWORK_ERROR_RETRY_DELAY milliseconds until we get items back
  */
 
-export function itemLoadingError () {
+export function itemLoadingError (err) {
 	return (dispatch) => {
 		dispatch({
 			type: ITEM_LOADING_ERROR,
-			err: 'Network request failed',
+			err: err ? err.error : 'Network request failed',
 		});
-		setTimeout(() => {
-			dispatch(loadItems());
-		}, NETWORK_ERROR_RETRY_DELAY);
+		if (err && err.error !== ITEM_UNAUTH_ERROR) {
+			setTimeout(() => {
+				dispatch(loadItems());
+			}, NETWORK_ERROR_RETRY_DELAY);
+		}
 	};
 }
 

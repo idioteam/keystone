@@ -17,7 +17,8 @@ import EditForm from './components/EditForm';
 import EditFormHeader from './components/EditFormHeader';
 import RelatedItemsList from './components/RelatedItemsList/RelatedItemsList';
 // import FlashMessages from '../../shared/FlashMessages';
-
+import NoAuth from '../../shared/NoAuth';
+import { ITEM_UNAUTH_ERROR } from '../../../constants';
 import {
 	selectItem,
 	loadItemData,
@@ -121,6 +122,11 @@ var ItemView = React.createClass({
 					</Container>
 				);
 			}
+		}
+		if (error.error === ITEM_UNAUTH_ERROR) {
+			return (
+				<NoAuth listName={this.props.currentList.label} />
+			);
 		}
 		if (error.message) {
 			// Server down + possibly other errors

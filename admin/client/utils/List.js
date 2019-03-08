@@ -238,7 +238,7 @@ List.prototype.loadItem = function (itemId, options, callback) {
 		if (resp.statusCode === 200) {
 			callback(null, data);
 		} else {
-			callback(data);
+			callback(resp.statusCode === 401 ? { error: '401' } : data);
 		}
 	});
 };
@@ -261,7 +261,7 @@ List.prototype.loadItems = function (options, callback) {
 		if (resp.statusCode === 200) {
 			callback(null, data);
 		} else {
-			callback(data);
+			callback(resp.statusCode === 401 ? { error: '401' } : data);
 		}
 	});
 };

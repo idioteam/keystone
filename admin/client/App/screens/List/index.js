@@ -26,12 +26,13 @@ import ListManagement from './components/ListManagement';
 import ConfirmationDialog from '../../shared/ConfirmationDialog';
 import CreateForm from '../../shared/CreateForm';
 import FlashMessages from '../../shared/FlashMessages';
+import NoAuth from '../../shared/NoAuth';
 import ItemsTable from './components/ItemsTable/ItemsTable';
 import UpdateForm from './components/UpdateForm';
 import { plural as pluralize } from '../../../utils/string';
 import { listsByPath } from '../../../utils/lists';
 import { checkForQueryChange } from '../../../utils/queryParams';
-
+import { ITEM_UNAUTH_ERROR } from '../../../constants';
 import {
 	deleteItems,
 	setActiveSearch,
@@ -517,6 +518,11 @@ const ListView = React.createClass({
 				<Center height="50vh" data-screen-id="list">
 					<Spinner />
 				</Center>
+			);
+		}
+		if (this.props.error && this.props.error === ITEM_UNAUTH_ERROR) {
+			return (
+				<NoAuth listName={this.props.currentList.label} />
 			);
 		}
 		return (

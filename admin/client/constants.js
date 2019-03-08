@@ -41,3 +41,4 @@ exports.spacing = {
 
 exports.TABLE_CONTROL_COLUMN_WIDTH = 26;  // icon + padding
 exports.NETWORK_ERROR_RETRY_DELAY = 500; // in ms
+exports.ITEM_UNAUTH_ERROR = '401';
