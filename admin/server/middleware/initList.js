@@ -10,7 +10,7 @@ module.exports = function initList (req, res, next) {
 	}
 
 	//	Verifico opzioni accesso
-	const roles = req.list.options.uiRoles;
+	const roles = req.list.options.ui_access;
 	if (roles && roles[0] !== '*' && !roles.includes(req.user.role)) {
 		return res.status(401).json({ error: 'unauthorized' });
 	}
