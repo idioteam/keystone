@@ -135,7 +135,7 @@ export const EditFormHeader = React.createClass({
 	renderCreateButton () {
 		const { nocreate, autocreate, singular } = this.props.list;
 
-		if (nocreate) return null;
+		if (nocreate || !(this.props.list.ui_can_add[0] === '*' || this.props.list.ui_can_add.includes(Keystone.user.role))) return null;
 
 		let props = {};
 		if (autocreate) {
