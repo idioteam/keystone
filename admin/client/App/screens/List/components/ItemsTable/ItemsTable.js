@@ -16,6 +16,8 @@ const ItemsTable = React.createClass({
 		list: PropTypes.object.isRequired,
 		manageMode: PropTypes.bool.isRequired,
 		rowAlert: PropTypes.object.isRequired,
+		user_can_delete: PropTypes.boolean,
+		user_can_edit: PropTypes.boolean,
 	},
 	renderCols () {
 		let cols = this.props.columns.map(col => (

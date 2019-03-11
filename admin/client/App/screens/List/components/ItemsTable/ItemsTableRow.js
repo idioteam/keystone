@@ -26,6 +26,8 @@ const ItemsRow = React.createClass({
 		connectDragSource: React.PropTypes.func,  // eslint-disable-line react/sort-prop-types
 		connectDropTarget: React.PropTypes.func,  // eslint-disable-line react/sort-prop-types
 		connectDragPreview: React.PropTypes.func, // eslint-disable-line react/sort-prop-types
+		user_can_delete: React.PropTypes.boolean,
+		user_can_edit: React.PropTypes.boolean,
 	},
 	renderRow (item) {
 		const itemId = item.id;
@@ -52,9 +54,9 @@ const ItemsRow = React.createClass({
 		if (!this.props.list.nodelete) {
 			cells.unshift(this.props.manageMode ? (
 				<ListControl key="_check" type="check" active={this.props.checkedItems[itemId]} />
-			) : (
+			) : this.props.user_can_delete ? (
 				<ListControl key="_delete" onClick={(e) => this.props.deleteTableItem(item, e)} type="delete" />
-			));
+			) : (<td/>));
 		}
 
 		var addRow = (<tr key={'i' + item.id} onClick={this.props.manageMode ? (e) => this.props.checkTableItem(item, e) : null} className={rowClassname}>{cells}</tr>);

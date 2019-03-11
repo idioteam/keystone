@@ -484,6 +484,8 @@ const ListView = React.createClass({
 								pageSize={this.props.lists.page.size}
 								drag={this.props.lists.drag}
 								dispatch={this.props.dispatch}
+								user_can_delete={this.props.currentList.ui_can_delete[0] === '*' || this.props.currentList.ui_can_delete.includes(Keystone.user.role)}
+								user_can_edit={this.props.currentList.ui_can_edit[0] === '*' || this.props.currentList.ui_can_edit.includes(Keystone.user.role)}
 							/>
 							{this.renderNoSearchResults()}
 						</div>
