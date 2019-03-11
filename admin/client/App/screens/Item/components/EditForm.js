@@ -25,6 +25,7 @@ import InvalidFieldType from '../../../shared/InvalidFieldType';
 import { deleteItem } from '../actions';
 
 import { upcase } from '../../../../utils/string';
+import { role_check } from '../../../../utils/role';
 import classes from 'keystone/admin/client/App/elemental/FormSelect/styles';
 import labelClasses from 'keystone/admin/client/App/elemental/FormLabel/styles'
 import { css } from 'glamor';
@@ -303,11 +304,32 @@ var EditForm = React.createClass({
 
 		// Padding must be applied inline so the FooterBar can determine its
 		// innerHeight at runtime. Aphrodite's styling comes later...
+		const ui_can_edit = role_check(this.props.list.ui_can_edit);
+		const ui_can_delete = role_check(this.props.list.ui_can_delete);
 
 		return (
 			<FooterBar style={styles.footerbar}>
 				<div style={styles.footerbarInner}>
-					{!this.props.list.noedit && (
+					{this.props.list.i18n && (
+						<div className={css(classes.container)} id="Locale_selector">
+							<label className={css(labelClasses.FormLabel)} htmlFor="_ui_lang">
+								<ResponsiveText
+									hiddenXS="change locale"
+									visibleXS="locale"
+								/>
+							</label>
+							<select className={css(classes.select)} id="_ui_lang" onChange={this.change_locale}>
+								{ Keystone.locales.map(l =>
+									<option value={l.locale} selected={this.state.values._ui_lang === l.locale}>{l.locale.toUpperCase()}</option>
+								)}
+							</select>
+							<span className={css(classes.arrows)}>
+								<span className={css(classes.arrow, classes.arrowTop)} />
+								<span className={css(classes.arrow, classes.arrowBottom)} />
+							</span>
+						</div>
+					)}
+					{(!this.props.list.noedit && ui_can_edit) && (
 						<LoadingButton
 							color="primary"
 							disabled={loading}
@@ -318,7 +340,7 @@ var EditForm = React.createClass({
 							{loadingButtonText}
 						</LoadingButton>
 					)}
-					{!this.props.list.noedit && (
+					{(!this.props.list.noedit && ui_can_edit) && (
 						<Button disabled={loading} onClick={this.toggleResetDialog} variant="link" color="cancel" data-button="reset">
 							<ResponsiveText
 								hiddenXS="reset changes"
@@ -326,7 +348,7 @@ var EditForm = React.createClass({
 							/>
 						</Button>
 					)}
-					{!this.props.list.nodelete && (
+					{(!this.props.list.nodelete && ui_can_delete) && (
 						<Button disabled={loading} onClick={this.toggleDeleteDialog} variant="link" color="delete" style={styles.deleteButton} data-button="delete">
 							<ResponsiveText
 								hiddenXS={`delete ${this.props.list.singular.toLowerCase()}`}
@@ -334,23 +356,6 @@ var EditForm = React.createClass({
 							/>
 						</Button>
 					)}
-					{this.props.list.i18n && (<div className={css(classes.container)} id='Locale_selector'>
-						<label className={css(labelClasses.FormLabel)} htmlFor="_ui_lang">
-							<ResponsiveText
-								hiddenXS="change locale"
-								visibleXS="locale"
-							/>
-						</label>
-						<select className={css(classes.select)} id="_ui_lang" onChange={this.change_locale}>
-							{ Keystone.locales.map(l =>
-								<option value={l.locale} selected={this.state.values._ui_lang === l.locale}>{l.locale.toUpperCase()}</option>
-							)}
-						</select>
-						<span className={css(classes.arrows)}>
-							<span className={css(classes.arrow, classes.arrowTop)} />
-							<span className={css(classes.arrow, classes.arrowBottom)} />
-						</span>
-					</div>)}
 				</div>
 			</FooterBar>
 		);

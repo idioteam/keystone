@@ -32,6 +32,7 @@ import UpdateForm from './components/UpdateForm';
 import { plural as pluralize } from '../../../utils/string';
 import { listsByPath } from '../../../utils/lists';
 import { checkForQueryChange } from '../../../utils/queryParams';
+import { role_check } from '../../../utils/role';
 import { ITEM_UNAUTH_ERROR } from '../../../constants';
 import {
 	deleteItems,
@@ -207,8 +208,8 @@ const ListView = React.createClass({
 				isOpen={manageMode}
 				itemCount={this.props.items.count}
 				itemsPerPage={this.props.lists.page.size}
-				nodelete={currentList.nodelete}
-				noedit={currentList.noedit}
+				nodelete={currentList.nodelete || !role_check(currentList.ui_can_delete)}
+				noedit={currentList.noedit || !role_check(currentList.ui_can_edit)}
 				selectAllItemsLoading={selectAllItemsLoading}
 			/>
 		);
@@ -237,7 +238,7 @@ const ListView = React.createClass({
 	renderHeader () {
 		const items = this.props.items;
 		const { autocreate, nocreate, plural, singular } = this.props.currentList;
-		const ui_can_edit = this.props.currentList.ui_can_edit[0] === '*' || this.props.currentList.ui_can_edit.includes(Keystone.user.role);
+		const ui_can_edit = role_check(this.props.currentList.ui_can_edit);
 		return (
 			<Container style={{ paddingTop: '2em' }}>
 				<ListHeaderTitle
@@ -484,8 +485,8 @@ const ListView = React.createClass({
 								pageSize={this.props.lists.page.size}
 								drag={this.props.lists.drag}
 								dispatch={this.props.dispatch}
-								user_can_delete={this.props.currentList.ui_can_delete[0] === '*' || this.props.currentList.ui_can_delete.includes(Keystone.user.role)}
-								user_can_edit={this.props.currentList.ui_can_edit[0] === '*' || this.props.currentList.ui_can_edit.includes(Keystone.user.role)}
+								user_can_delete={role_check(this.props.currentList.ui_can_delete)}
+								user_can_edit={role_check(this.props.currentList.ui_can_edit)}
 							/>
 							{this.renderNoSearchResults()}
 						</div>

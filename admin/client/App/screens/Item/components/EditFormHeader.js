@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 
 import Drilldown from './Drilldown';
 import { GlyphButton, ResponsiveText } from '../../../elemental';
+import { role_check } from '../../../../utils/role';
 
 export const EditFormHeader = React.createClass({
 	displayName: 'EditFormHeader',
@@ -135,7 +136,7 @@ export const EditFormHeader = React.createClass({
 	renderCreateButton () {
 		const { nocreate, autocreate, singular } = this.props.list;
 
-		if (nocreate || !(this.props.list.ui_can_add[0] === '*' || this.props.list.ui_can_add.includes(Keystone.user.role))) return null;
+		if (nocreate || !role_check(this.props.list.ui_can_add)) return null;
 
 		let props = {};
 		if (autocreate) {
