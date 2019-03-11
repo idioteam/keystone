@@ -304,7 +304,7 @@ var EditForm = React.createClass({
 
 		// Padding must be applied inline so the FooterBar can determine its
 		// innerHeight at runtime. Aphrodite's styling comes later...
-		const ui_can_edit = role_check(this.props.list.ui_can_edit);
+		const ui_can_edit = role_check(this.props.list.ui_can_edit, this.props.data.id);
 		const ui_can_delete = role_check(this.props.list.ui_can_delete);
 
 		return (
