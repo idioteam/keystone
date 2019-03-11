@@ -237,7 +237,7 @@ const ListView = React.createClass({
 	renderHeader () {
 		const items = this.props.items;
 		const { autocreate, nocreate, plural, singular } = this.props.currentList;
-
+		const ui_can_edit = this.props.currentList.ui_can_edit[0] === '*' || this.props.currentList.ui_can_edit.includes(Keystone.user.role);
 		return (
 			<Container style={{ paddingTop: '2em' }}>
 				<ListHeaderTitle
@@ -259,7 +259,7 @@ const ListView = React.createClass({
 					expandOnClick={this.toggleTableWidth}
 
 					// create
-					createIsAvailable={!nocreate}
+					createIsAvailable={!nocreate && ui_can_edit}
 					createListName={singular}
 					createOnClick={autocreate
 						? this.createAutocreate
